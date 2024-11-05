@@ -7,16 +7,16 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Util {
-    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/kata1";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "123456";
+    private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/kata1";
+    private static final String DB_USERNAME = "root";
+    private static final String DB_PASSWORD = "123456";
 
     public static Connection getConnection() {
         Connection connection;
         try {
-            Class.forName(DRIVER);
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            Class.forName(DB_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
             System.out.println("ok connection");
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("error connection");
