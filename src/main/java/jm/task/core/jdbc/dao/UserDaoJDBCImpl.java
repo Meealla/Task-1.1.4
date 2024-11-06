@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    Connection con = Util.getConnection();
 
     public UserDaoJDBCImpl() {
 
@@ -16,7 +15,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
-        try (Statement statement = con.createStatement()) {
+        try (Connection con = Util.getConnection(); Statement statement = con.createStatement()) {
             String tableSql = """
                     CREATE TABLE IF NOT EXISTS User
                     (
@@ -33,7 +32,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void dropUsersTable() {
-        try (Statement statement = con.createStatement()) {
+        try (Connection con = Util.getConnection(); Statement statement = con.createStatement()) {
             String tableSql = """
                     DROP TABLE IF EXISTS User
                     """;
@@ -45,7 +44,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        try (PreparedStatement statement = con.prepareStatement("INSERT INTO User (name, lastName, age) VALUES (?, ?, ?)")) {
+        try (Connection con = Util.getConnection();
+             PreparedStatement statement = con.prepareStatement("INSERT INTO User (name, lastName, age) VALUES (?, ?, ?)")) {
             statement.setString(1, name);
             statement.setString(2, lastName);
             statement.setByte(3, age);
@@ -60,7 +60,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void removeUserById(long id) {
-        try (PreparedStatement statement = con.prepareStatement("DELETE FROM User WHERE id = ?")) {
+        try (Connection con = Util.getConnection();
+             PreparedStatement statement = con.prepareStatement("DELETE FROM User WHERE id = ?")) {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -71,7 +72,7 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
-        try (Statement statement = con.createStatement()) {
+        try (Connection con = Util.getConnection(); Statement statement = con.createStatement()) {
             String tableSql = "SELECT * FROM User";
             ResultSet resultSet = statement.executeQuery(tableSql);
 
@@ -91,7 +92,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void cleanUsersTable() {
-        try (Statement statement = con.createStatement()) {
+        try (Connection con = Util.getConnection(); Statement statement = con.createStatement()) {
             String tableSql = "DELETE FROM User";
             statement.executeUpdate(tableSql);
         } catch (SQLException e) {
