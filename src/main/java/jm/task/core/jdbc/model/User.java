@@ -2,6 +2,7 @@ package jm.task.core.jdbc.model;
 
 import javax.persistence.*;
 import java.util.Objects;
+
 @Entity
 @Table(name = "User")
 
@@ -64,11 +65,11 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                '}';
+               "id=" + id +
+               ", name='" + name + '\'' +
+               ", lastName='" + lastName + '\'' +
+               ", age=" + age +
+               '}';
     }
 
     @Override
@@ -77,9 +78,9 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return Objects.equals(id, user.id)
-                && Objects.equals(name, user.name)
-                && Objects.equals(lastName, user.lastName)
-                && Objects.equals(age, user.age);
+               && Objects.equals(name, user.name)
+               && Objects.equals(lastName, user.lastName)
+               && Objects.equals(age, user.age);
     }
 
     @Override
